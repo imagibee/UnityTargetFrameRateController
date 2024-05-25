@@ -35,8 +35,8 @@ public class LoadSimulator : MonoBehaviour
         }
         else {
             stopwatch.Restart();
-            var cycle = frameCount++ % 2;
-            if (cycle == 0) {
+            var oddOrEven = frameCount++ % 2;
+            if (oddOrEven == 0) {
                 expirationMs = 1000 / (value1 + Overhead);
             }
             else {
