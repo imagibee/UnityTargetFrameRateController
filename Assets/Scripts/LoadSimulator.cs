@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using UnityEngine;
+using TMPro;
 
 // Try to hit the requested frame rates in value1 and value2
 // Either toggles between the two, or sets them to the same
@@ -8,24 +9,21 @@ public class LoadSimulator : MonoBehaviour
 {
     public static bool Ready;
     public static int Overhead;
+    public TextMeshProUGUI VsyncText;
     readonly Stopwatch stopwatch = new();
     float value1 = 20;
     float value2 = 20;
     float expirationMs;
     int frameCount;
-#if UNITY_EDITOR
-    const int measureCycle = 120;
-#else
-    const int measureCycle = 60;
-#endif
     int measureCount;
     float sum;
+    bool vsync = true;
 #if UNITY_EDITOR
-    const bool vsync = false;
     const int cycle = 5;
+    const int measureCycle = 120;
 #else
-    const bool vsync = true;
     const int cycle = 60;
+    const int measureCycle = 60;
 #endif
 
     void Update()
@@ -49,6 +47,12 @@ public class LoadSimulator : MonoBehaviour
             }
             Ready = true;
         }
+    }
+
+    public void OnVsync()
+    {
+        vsync = !vsync;
+        VsyncText.text = $"Vsync = {vsync}";
     }
 
     public void On17()
